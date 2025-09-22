@@ -130,7 +130,6 @@ export function BaseMap() {
         <Map
           reuseMaps
           mapStyle={"mapbox://styles/nkmwicz123/clsg5aqky03gr01pb30cmebxd"}
-          // mapStyle="mapbox://styles/nkmwicz123/clsg5aqky03gr01pb30cmebxd"
           preventStyleDiffing={true}
           mapboxAccessToken={import.meta.env.VITE_MAPBOX_ACCESS_TOKEN}
         />
