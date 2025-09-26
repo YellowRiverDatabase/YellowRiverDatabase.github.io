@@ -104,13 +104,21 @@ export function EntryModal() {
               </h2>
               <p style={blackPStyle}>
                 This is a web atlas to accompany{" "}
-                <a href="https://www.amazon.com/Yellow-River-Natural-Unnatural-Agrarian/dp/0300238339/">
+                <a
+                  href="https://www.amazon.com/Yellow-River-Natural-Unnatural-Agrarian/dp/0300238339/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   <i>The Yellow River: A Natural and Unnatural History</i>
                 </a>{" "}
                 by Ruth Mostern. The data presented here is provided in
                 collaboration with Sharon Zhang, Ryan Horne, and Nathan
                 Michalewicz. The data is available at{" "}
-                <a href="https://github.com/YellowRiverDatabase/geodata/tree/main/relational-datadata">
+                <a
+                  href="https://github.com/YellowRiverDatabase/geodata/tree/main/relational-datadata"
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   GitHub.
                 </a>
               </p>
