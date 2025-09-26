@@ -105,7 +105,7 @@ export function EntryModal() {
               <p style={blackPStyle}>
                 This is a web atlas to accompany{" "}
                 <a
-                  href="https://www.amazon.com/Yellow-River-Natural-Unnatural-Agrarian/dp/0300238339/"
+                  href="https://yalebooks.yale.edu/book/9780300238334/the-yellow-river/"
                   target="_blank"
                   rel="noreferrer"
                 >
@@ -120,6 +120,15 @@ export function EntryModal() {
                   rel="noreferrer"
                 >
                   GitHub.
+                </a>{" "}
+                For more information on this project and how to use this data,
+                please see the{" "}
+                <a
+                  href="https://github.com/YellowRiverDatabase/Documentation/blob/main/release_notes.md"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  release document.
                 </a>
               </p>
               <p>
