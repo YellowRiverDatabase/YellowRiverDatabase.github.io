@@ -73,13 +73,16 @@ export function Header() {
           >
             <Container fluid>
               <Navbar.Brand href="#">
-                The Tracks of Yu Database
-                <br /> A Web Atlas{" "}
+                The Tracks of Yu
+                <br /> Digital Atlas{" "}
               </Navbar.Brand>
               <Navbar.Toggle
                 aria-controls={`offcanvasNavbar-expand-${expand}`}
                 onClick={handleShow}
-              />
+                style={{ padding: 10, borderColor: "black" }}
+              >
+                Navigation
+              </Navbar.Toggle>
               <Navbar.Offcanvas
                 id={`offcanvasNavbar-expand-${expand}`}
                 aria-labelledby={`offcanvasNavbarLabel-expand-${expand}`}
