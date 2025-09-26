@@ -100,13 +100,39 @@ export function EntryModal() {
           >
             <section style={sectionStyle}>
               <h2 style={titleStyle}>
-                Welcome to the Web Atlas
-                <br />
-                for the Yellow River Database
+                Welcome to the Tracks of Yu Digital Atlas
               </h2>
               <p style={blackPStyle}>
-                There will be more content here as we write a simple
-                description.
+                This is a web atlas to accompany{" "}
+                <a href="https://www.amazon.com/Yellow-River-Natural-Unnatural-Agrarian/dp/0300238339/">
+                  <i>The Yellow River: A Natural and Unnatural History</i>
+                </a>{" "}
+                by Ruth Mostern. The data presented here is provided in
+                collaboration with Sharon Zhang, Ryan Horne, and Nathan
+                Michalewicz. The data is available at{" "}
+                <a href="https://github.com/YellowRiverDatabase/geodata/tree/main/relational-datadata">
+                  GitHub.
+                </a>
+              </p>
+              <p>
+                The data presented here represents historical events associated
+                the the Yellow River in China, including flood events, river
+                course changes, and the construction of water control projects.
+                The data is drawn from a variety of historical sources, and is
+                presented here for further exploration and analysis. Each
+                colored column on the map represents a location of events, and
+                the height of the column represents the number of events that
+                occurred at that location. Columns are colored based on the
+                predominant type of event that occurred at that location.
+                Reference the legend for more information here. Each column can
+                be clicked to reveal more information about the events that
+                occurred at that location. Events and locations can be filtered
+                using the filters menu in the top right corner and the time
+                slider at the bottom of the screen. In addition, the route of
+                the Yellow River as it existed at different periods of time can
+                be toggled on and off using in the top right corner. This
+                feature will show all river paths that existed during the period
+                of time seleted in the time slider.
               </p>
             </section>
             <button style={modalButtonStyle} className="" onClick={closeModal}>
