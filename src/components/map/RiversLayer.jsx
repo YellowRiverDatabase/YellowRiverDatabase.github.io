@@ -31,7 +31,7 @@ export function RiversLayer() {
       id: "river-routes",
       data: riverRoutes,
       pickable: true,
-      visible: visibility["Rivers"],
+      visible: visibility["River Courses"],
       stroked: true,
       extruded: false,
       lineWidthMinPixels: 5,

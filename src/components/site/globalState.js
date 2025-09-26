@@ -82,7 +82,7 @@ export const visibilityState = atom({
   key: "visibilityState",
   default: {
     "Study Area": false,
-    Rivers: false,
+    "River Courses": false,
   },
 });
 
