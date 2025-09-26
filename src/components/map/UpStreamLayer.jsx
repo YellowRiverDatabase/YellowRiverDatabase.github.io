@@ -71,7 +71,7 @@ export function UpStreamLayer() {
       height: 250,
       mask: true,
     }),
-    getSize: (d) => d.size,
+    getSize: (d) => d.size * 2,
   });
 
   return Layer;
