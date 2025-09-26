@@ -1,6 +1,8 @@
 import { filter, group } from "d3-array";
 import { log } from "deck.gl";
 import { atom, selector } from "recoil";
+import { booleanPointInPolygon } from "@turf/boolean-point-in-polygon";
+import { point, polygon } from "@turf/helpers";
 
 export const viewState = atom({
   key: "viewState",
@@ -129,10 +131,32 @@ export const eventsState = atom({
   default: [],
 });
 
+export const eventsInStudyAreaState = selector({
+  key: "eventsInStudyAreaState",
+  get: ({ get }) => {
+    const events = get(eventsState);
+    const studyBorder = get(StudyBorderState);
+    if (events.length === 0) {
+      return events;
+    }
+    if (studyBorder?.length === 0) {
+      return events;
+    }
+    const studyArea = studyBorder?.features?.[0];
+    console.log("borderFeature features:", studyArea);
+    const filtered = events.filter((e) => {
+      console.log("e:", e);
+      const pt = point([e.Latitude, e.Longitude]);
+      return booleanPointInPolygon(pt, studyArea);
+    });
+    return filtered;
+  },
+});
+
 export const eventState1 = selector({
   key: "eventState1",
   get: ({ get }) => {
-    const ev = get(eventsState);
+    const ev = get(eventsInStudyAreaState);
     // console.log("ev:", ev);
     const newEv = [];
     ev.forEach((e) => {
