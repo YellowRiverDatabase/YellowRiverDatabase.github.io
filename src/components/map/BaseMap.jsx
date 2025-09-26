@@ -97,6 +97,9 @@ export function BaseMap() {
               object.properties.yearstart + " - " + object.properties.yearend
             );
           }
+          if (object && object.regime) {
+            return `${object.hz} `;
+          }
           if (object && !object.properties && object.events) {
             // // console.log(object.events);
             return `${object.ch_pinyin} (${object.ft_id}): ${
