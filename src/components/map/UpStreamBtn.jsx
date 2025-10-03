@@ -37,8 +37,11 @@ const titleLine = {
 };
 
 const valuesBox = {
-  display: "flex",
-  flexDirection: "row",
+  display: "grid",
+  // gridAutoFlow: "row",
+  gridTemplateColumns: "1fr 1fr",
+  alignItems: "center",
+  justifyItems: "start",
   gap: "1em",
   // width: "100%",
   flexWrap: "wrap",
@@ -49,11 +52,18 @@ const valuesBox = {
 const lineItem = {
   // width: "100%",
   display: "flex",
-  width: "75px",
+  // width: "75px",
   flexDirection: "row",
-  justifyContent: "center",
-  gap: "1em",
+  // justifyContent: "space-between",
+  alignItems: "center",
+  gap: "0.5em",
   cursor: "pointer",
+};
+
+const lineBox = {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "start",
 };
 
 const CheckedBox = ({ onClick }) => {
@@ -118,8 +128,12 @@ export function UpStreamBtn() {
                 onClick={() => handleClick(key)}
                 key={`${key}`}
               >
-                {snapShots[key] ? <CheckedBox /> : <EmptyBox />}{" "}
-                <section>{key}</section>
+                <div style={lineBox}>
+                  {snapShots[key] ? <CheckedBox /> : <EmptyBox />}{" "}
+                </div>
+                <div style={lineBox}>
+                  <section>{key}</section>
+                </div>
               </div>
             );
           })}
