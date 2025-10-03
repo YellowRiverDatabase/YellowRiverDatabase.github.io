@@ -81,7 +81,7 @@ export function Header() {
                 onClick={handleShow}
                 style={{ padding: 10, borderColor: "black" }}
               >
-                Navigation
+                Project Info
               </Navbar.Toggle>
               <Navbar.Offcanvas
                 id={`offcanvasNavbar-expand-${expand}`}
