@@ -50,19 +50,19 @@ export function Contributors() {
     {
       name: "Nathan Michalewicz",
       url: "https://www.worldhistory.pitt.edu/sites/default/files/nkm.jpg",
-      description: "",
+      description: "Web Atlas Designer",
       info: "Nathan Michalewicz is an Assistant Professor of History at Queens University of Charlotte. He received his Ph.D. at George Mason University, specializing in early modern Europe and digital history. He held a post doctoral position at the University of Pittsburgh, working on the World Historical Gazetteer and teaching courses on geo-spatial history. His research interests focus on Christian-Muslim interactions as well as the intersection of data analytics, information management, and history.",
     },
     {
       name: "Ryan Horne",
       url: "/ryanhorne.jpg",
-      description: "",
+      description: "Data Manager",
       info: "Ryan Horne is a Digital Research Specialist in the Office of Advanced Research Computing at the University of California, Los Angeles. A former software engineer, Ryan holds a Ph.D. in ancient history from UNC Chapel Hill. He is an expert in leveraging Linked Open Data for digital humanities research, with particular attention on geospatial and network analysis. In addition to working on dozens of digital projects, Ryan serves as a managing editor for the Pleiades project, was an awardee of a NEH/Mellon grant for digital publication, and has worked with the Digital Ethnic Futures Consortium, the Black Lunchtable oral history archive, the Ancient Itineraries Institute, Pelagios Network, and served as the director of the Ancient World Mapping Center at UNC.",
     },
     {
       name: "Sharon Zhang",
       url: "https://www.history.pitt.edu/sites/default/files/person-images/Zhang.jpg",
-      description: "",
+      description: "Chinese Data Expert",
       info: "Sharon Zhang is a Ph.D. candidate in History at the University of Pittsburgh. Her dissertation investigates material and cultural exchanges involved in gift-giving rituals between China and the wider world, particularly Europe, during the Mongol-Yuan era of the 13th-14th centuries. Her research examines how the circulation of tributary gifts facilitated the formation of transregional networks and influenced power dynamics in the global medieval world. Sharon’s broader academic interests extend to Sino-foreign interactions during China’s middle period (circa 800-1400), the experiences of medieval Eurasian travelers along both overland and maritime Silk Routes, and spatial and digital approaches for premodern history studies.",
     },
   ];

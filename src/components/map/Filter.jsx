@@ -109,6 +109,8 @@ export function Filter() {
     ["Risky situation", "險"],
     ["Omen", "兆"],
     ["Course change", "徙"],
+    ["Disaster", "塞"],
+    ["Extinction", "絕"],
   ];
 
   const managementTypes = [

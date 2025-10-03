@@ -36,7 +36,7 @@ export const rgbHash = {
   "Dam/Sluice Opening 放": "rgb(230, 230, 250)",
   "Dredging 疏": "rgb(165, 42, 42)",
   "Using water for a purpose 助": "rgb(245, 245, 220)",
-  "Management 修": "rgb(128, 0, 0)",
+  "Management 治": "rgb(128, 0, 0)",
   "Repair of Structures 修": "rgb(189, 252, 201)",
   "Emergency Repair 救": "rgb(128, 128, 0)",
   "New Construction 建": "rgb(255, 215, 180)",

@@ -265,6 +265,36 @@ export const upstreamState = atom({
   default: [],
 });
 
+export const north_south_dynasties = [
+  "Qi",
+  "Northern Wei",
+  "Western Jin",
+  "Wei",
+  "Later Qin",
+  "Western Wei",
+  "Later Zhao",
+  "Former Liang",
+  "Former Qin",
+  "Later Liang",
+  "Former Yan",
+  "Former Zhao",
+  "Eastern Wei",
+]; // 220ce-618ce
+// group Warring State into Zhou
+export const war_states_zhou = ["Zhou", "Warring States"]; // -1046 to -221
+export const regime_dates = {
+  Ming: [1368, 1644],
+  Qing: [1644, 1911],
+  "Eastern Han": [25, 220],
+  Yuan: [1276, 1368],
+  "Western Han": [-202, 9],
+  Zhou: [-1046, -256],
+  Qin: [-221, -206],
+  Tang: [618, 906],
+  Song: [960, 1127], // Northern Song
+  "Northern and Southern Dynasties": [220, 618],
+};
+
 export const upstreamChoicesState = atom({
   key: "upstreamChoicesState",
   default: {},
@@ -276,7 +306,7 @@ export const upstreamDataState = selector({
     const upstream = get(upstreamState);
     const options = get(upstreamChoicesState);
     return upstream.filter((d) => {
-      return d.date in options && options[d.date] === true;
+      return d.regime in options && options[d.regime] === true;
     });
   },
 });

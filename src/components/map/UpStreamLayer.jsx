@@ -5,6 +5,9 @@ import {
   upstreamDataState,
   upstreamState,
   visibilityState,
+  war_states_zhou,
+  north_south_dynasties,
+  regime_dates,
 } from "../site/globalState";
 import { useRecoilState, useRecoilValue } from "recoil";
 
@@ -46,36 +49,6 @@ export function UpStreamLayer() {
     getData();
   }, []);
 
-  const north_south_dynasties = [
-    "Qi",
-    "Northern Wei",
-    "Western Jin",
-    "Wei",
-    "Later Qin",
-    "Western Wei",
-    "Later Zhao",
-    "Former Liang",
-    "Former Qin",
-    "Later Liang",
-    "Former Yan",
-    "Former Zhao",
-    "Eastern Wei",
-  ]; // 220ce-618ce
-  // group Warring State into Zhou
-  const war_states_zhou = ["Zhou", "Warring States"]; // -1046 to -221
-  const dates = {
-    Ming: [1368, 1644],
-    Qing: [1644, 1911],
-    "Eastern Han": [25, 220],
-    Yuan: [1276, 1368],
-    "Western Han": [-202, 9],
-    Zhou: [-1046, -256],
-    Qin: [-221, -206],
-    Tang: [618, 906],
-    Song: [960, 1127], // Northern Song
-    "Northern and Southern Dynasties": [220, 618],
-  };
-
   // useEffect(() => {
   //   console.log("upstream: ", upstream);
   //   console.log("upStreamDat", upStreamData);
@@ -84,6 +57,7 @@ export function UpStreamLayer() {
   //** Qi, Northern Wei, Western Jin, Wei, Later Qin, Western Wei, Later Zhao, Former Liang, Former Qin, Later Liang, Former Yan, Former Zhao, Eastern Wei should be grouped as Northern and Southern Dynasties. (220ce-618ce)
   //  */
   //
+  const returnRegimes = (regime) => {};
 
   useEffect(() => {
     const snapShots = [...new Set(upstream.map((d) => d.regime))];
