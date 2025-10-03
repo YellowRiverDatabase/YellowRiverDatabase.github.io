@@ -110,7 +110,7 @@ export function Filter() {
     ["Omen", "兆"],
     ["Course change", "徙"],
     ["Disaster", "塞"],
-    ["Extinction", "絕"],
+    ["Extinction (river dries up)", "絕"],
   ];
 
   const managementTypes = [
@@ -182,8 +182,9 @@ export function Filter() {
         "Intentional Breach": true,
         "Risky situation": true,
         Omen: true,
+        Disaster: true,
         "Course change": true,
-        Extinction: true,
+        "Extinction (river dries up)": true,
         Blockage: true,
       });
       return;
@@ -200,6 +201,8 @@ export function Filter() {
         "Course change": false,
         Extinction: false,
         Blockage: false,
+        Disaster: false,
+        "Extinction (river dries up)": false,
       });
       return;
     }

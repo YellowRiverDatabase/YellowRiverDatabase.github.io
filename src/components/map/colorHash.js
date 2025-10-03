@@ -26,6 +26,7 @@ export const rgbHash = {
   "Breach 決": "rgb(0, 128, 0)",
   "Drought 旱": "rgb(0, 0, 255)",
   "Intentional Breach 毀": "rgb(0, 255, 255)",
+  "Disaster 塞": "rgb(255, 255, 0)",
   "Risky situation 險": "rgb(0, 255, 255)",
   "Omen 兆": "rgb(255, 0, 255)",
   "Course change 徙": "rgb(255, 165, 0)",
