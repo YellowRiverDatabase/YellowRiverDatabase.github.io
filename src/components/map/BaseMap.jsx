@@ -101,31 +101,13 @@ export function BaseMap() {
             return `${object.hz} `;
           }
           if (object && !object.properties && object.events) {
-            // // console.log(object.events);
-            return `${object.ch_pinyin} (${object.ft_id}): ${
+            console.log(object.events);
+            return `${object.ch_pinyin} (${object.tr_title}): ${
               object.events.length
             } events from ${formatDate(
-              min(
-                object.events
-                  .map((a) =>
-                    Object.values(a)
-                      .flat()
-                      .map((b) => b.en_date_start)
-                  )
-                  .flat(),
-                (c) => c
-              )
+              min(object.events.map((a) => a.en_date_start))
             )} to ${formatDate(
-              max(
-                object.events
-                  .map((a) =>
-                    Object.values(a)
-                      .flat()
-                      .map((b) => b.en_date_start)
-                  )
-                  .flat(),
-                (c) => c
-              )
+              max(object.events.map((a) => a.en_date_start))
             )}`;
           }
         }}

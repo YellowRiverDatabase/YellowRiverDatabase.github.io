@@ -32,9 +32,11 @@ const modal = {
   padding: "20px",
   minWidth: "250px",
   minHeight: "250px",
+  maxHeight: "80vh",
   maxWidth: "33vw",
   border: "solid 1px black",
   color: "black",
+  overflow: "auto",
 };
 
 const header = {
@@ -98,16 +100,37 @@ export function ModalSources({ sources, onClose }) {
                 <tbody>
                   <tr style={trStyle}>
                     <td style={{ textAlign: "start" }}>Category: </td>
-                    <td>{Array.from(sourceInfo.en_cat).join(", ")}</td>
+                    <td>{Array.from(new Set(sourceInfo.en_cat)).join(", ")}</td>
                   </tr>
                   <tr style={trStyle}>
                     <td style={{ textAlign: "start" }}>Type:</td>
-                    <td>{Array.from(sourceInfo.en_type).join(", ")}</td>
+                    <td>
+                      {Array.from(new Set(sourceInfo.en_type)).join(", ")}
+                    </td>
                   </tr>
-                  <tr style={trStyle}>
-                    <td style={{ textAlign: "start" }}>Description:</td>
-                    <td>{Array.from(sourceInfo.source).join(", ")}</td>
-                  </tr>
+                  {sourceInfo.source?.length > 0 &&
+                    sourceInfo.source.map((s, i) => (
+                      <tr style={trStyle}>
+                        <td style={{ textAlign: "start" }}>
+                          Source{sourceInfo.source.length > 1 ? i + 1 : ""}:
+                        </td>
+                        <td>
+                          {s}{" "}
+                          {sourceInfo.src_page[i]
+                            ? "pg. " + sourceInfo.src_page[i]
+                            : ""}
+                        </td>
+                      </tr>
+                    ))}
+                  {sourceInfo.description?.length > 0 &&
+                    sourceInfo.description.map((d, i) => (
+                      <tr style={trStyle}>
+                        <td style={{ textAlign: "start" }}>
+                          {sourceInfo.source[i]} Description:
+                        </td>
+                        <td>{d}</td>
+                      </tr>
+                    ))}
                 </tbody>
               </table>
             </div>

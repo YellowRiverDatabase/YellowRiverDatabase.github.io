@@ -111,7 +111,7 @@ export function MyTable() {
           </thead>
           <tbody>
             {sortedTableData.map((r, i) => {
-              const row = r[0];
+              const row = r;
               return (
                 <tr
                   key={`table-row-${i}`}
@@ -121,8 +121,12 @@ export function MyTable() {
                   }}
                 >
                   <td style={dataStyle}>{formatDate(row.en_date_start)}</td>
-                  <td style={dataStyle}>{row.en_cat}</td>
-                  <td style={dataStyle}>{row.en_type}</td>
+                  <td style={dataStyle}>
+                    {[...new Set(row.en_cat)].join(", ")}
+                  </td>
+                  <td style={dataStyle}>
+                    {[...new Set(row.en_type)].join(", ")}
+                  </td>
                 </tr>
               );
             })}

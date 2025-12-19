@@ -49,10 +49,10 @@ export function UpStreamLayer() {
     getData();
   }, []);
 
-  // useEffect(() => {
-  //   console.log("upstream: ", upstream);
-  //   console.log("upStreamDat", upStreamData);
-  // }, [upstream, upStreamData]);
+  useEffect(() => {
+    console.log("upstream: ", upstream);
+    console.log("upStreamDat", upStreamData);
+  }, [upstream, upStreamData]);
 
   //** Qi, Northern Wei, Western Jin, Wei, Later Qin, Western Wei, Later Zhao, Former Liang, Former Qin, Later Liang, Former Yan, Former Zhao, Eastern Wei should be grouped as Northern and Southern Dynasties. (220ce-618ce)
   //  */
@@ -72,7 +72,7 @@ export function UpStreamLayer() {
     pickable: true,
     sizeScale: 10,
     visibility: visibility["Upstream Places"],
-    getPosition: (d) => [d.x_coor, d.y_coor],
+    getPosition: (d) => [d.y_coor, d.x_coor],
     getIcon: (d) => ({
       url: svgToDataURL(svgVillageIcon()),
       width: 250,

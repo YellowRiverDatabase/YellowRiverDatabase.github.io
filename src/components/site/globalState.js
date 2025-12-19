@@ -145,8 +145,8 @@ export const eventsInStudyAreaState = selector({
     const studyArea = studyBorder?.features?.[0];
     console.log("borderFeature features:", studyArea);
     const filtered = events.filter((e) => {
-      console.log("e:", e);
-      const pt = point([e.Latitude, e.Longitude]);
+      // console.log("e:", e);
+      const pt = point([e.lat, e.long]);
       return booleanPointInPolygon(pt, studyArea);
     });
     return filtered;
@@ -157,41 +157,41 @@ export const eventState1 = selector({
   key: "eventState1",
   get: ({ get }) => {
     const ev = get(eventsInStudyAreaState);
-    // console.log("ev:", ev);
+    console.log("ev:", ev);
     const newEv = [];
-    ev.forEach((e) => {
-      const events = e.events;
-      const reducedEvents = events.map((eventGroup) => {
-        const events = Object.values(eventGroup)[0];
+    // ev.forEach((e) => {
+    //   const events = e.events;
+    //   const reducedEvents = events.map((eventGroup) => {
+    //     const events = Object.values(eventGroup)[0];
 
-        return events.reduce((acc, event) => {
-          const existingEvent = acc.find(
-            (e) => e.en_date_start === event.en_date_start
-          );
+    //     return events.reduce((acc, event) => {
+    //       const existingEvent = acc.find(
+    //         (e) => e.en_date_start === event.en_date_start
+    //       );
 
-          if (existingEvent) {
-            existingEvent.en_cat = new Set(existingEvent.en_cat);
-            existingEvent.en_title = new Set(existingEvent.en_title);
-            existingEvent.en_type = new Set(existingEvent.en_type);
-            existingEvent.source = new Set(existingEvent.source);
-          } else {
-            acc.push({
-              ch_date: event.ch_date,
-              en_date_start: event.en_date_start,
-              en_cat: new Set([event.en_cat]),
-              en_title: new Set([event.en_title]),
-              en_type: new Set([event.en_type]),
-              source: new Set([event.source]),
-            });
-          }
+    //       if (existingEvent) {
+    //         existingEvent.en_cat = new Set(existingEvent.en_cat);
+    //         existingEvent.en_title = new Set(existingEvent.en_title);
+    //         existingEvent.en_type = new Set(existingEvent.en_type);
+    //         existingEvent.source = new Set(existingEvent.source);
+    //       } else {
+    //         acc.push({
+    //           ch_date: event.ch_date,
+    //           en_date_start: event.en_date_start,
+    //           en_cat: new Set([event.en_cat]),
+    //           en_title: new Set([event.en_title]),
+    //           en_type: new Set([event.en_type]),
+    //           source: new Set([event.source]),
+    //         });
+    //       }
 
-          return acc;
-        }, []);
-      });
-      newEv.push({ ...e, events: reducedEvents });
-    });
+    //       return acc;
+    //     }, []);
+    //   });
+    //   newEv.push({ ...e, events: reducedEvents });
+    // });
     // console.log("newEv:", newEv);
-    return newEv;
+    return ev;
   },
 });
 
@@ -216,13 +216,13 @@ export const filteredEventsState = selector({
         // const arr = Object.keys(d);
         if (typeArray.length === 0) {
           // // console.log("d", d.length);
-          return end > d[0].en_date_start && start < d[0].en_date_start;
+          return end > d.en_date_start && start < d.en_date_start;
         }
         if (typeArray.length > 0) {
           return (
-            end > d[0].en_date_start &&
-            start < d[0].en_date_start &&
-            typeArray.some((type) => d[0].en_type.has(type))
+            end > d.en_date_start &&
+            start < d.en_date_start &&
+            typeArray.some((type) => d.en_type.includes(type))
           );
         }
       });
