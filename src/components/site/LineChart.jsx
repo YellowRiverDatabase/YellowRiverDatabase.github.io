@@ -118,11 +118,11 @@ export function LineChart() {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-
+  const h = 100;
   const margin = { top: 10, right: 30, bottom: 30, left: 30 };
   // const width = divWidth * 2.2;
   const width = divWidth;
-  const height = 150 - margin.top - margin.bottom;
+  const height = h - margin.top - margin.bottom;
 
   const x = d3
     .scaleLinear()
@@ -137,7 +137,7 @@ export function LineChart() {
   const linebuilder = d3
     .line()
     .x((d) => x(d.date))
-    .y((d) => y(d.events.length));
+    .y((d) => y(d.events.length - 50));
 
   const linepath = linebuilder(groupedEvents);
 
@@ -181,7 +181,7 @@ export function LineChart() {
       mouseX < divWidth &&
       mouseX > rectLX
     ) {
-      setRectRX(mouseX + 5);
+      setRectRX(Math.min(mouseX + 5, divWidth));
     }
     if (
       direction === "left" &&
@@ -189,7 +189,7 @@ export function LineChart() {
       mouseX < divWidth &&
       mouseX < rectRX
     ) {
-      setRectLX(mouseX - 5);
+      setRectLX(Math.max(mouseX - 5, 0));
     }
   };
   const handleMouseUp = (e) => {
@@ -205,9 +205,11 @@ export function LineChart() {
     const [mouseX] = d3.pointer(e);
     const closestRect = rectRX - mouseX < mouseX - rectLX ? "right" : "left";
     if (closestRect === "right") {
-      mouseX + 5 < x(1916) ? setRectRX(mouseX + 5) : setRectRX(x(1916) - 5);
+      mouseX + 5 < x(1916)
+        ? setRectRX(Math.min(mouseX + 5, divWidth))
+        : setRectRX(Math.min(x(1916) - 5, divWidth));
     } else {
-      setRectLX(mouseX - 5);
+      setRectLX(Math.max(mouseX - 5, 0));
     }
   };
 
@@ -249,9 +251,10 @@ export function LineChart() {
         <div style={{ ...rightYears, right: -95 }}>{localYears[1]}</div>
 
         <svg
+          overflow="visible"
           style={{
             ...svg,
-            width: divWidth + 20,
+            width: divWidth,
             height: "100%",
             cursor: isLeftDragging || isRightDragging ? "ew-resize" : "default",
             border: "solid 1px black",
@@ -274,14 +277,14 @@ export function LineChart() {
             style={{ marginLeft: margin.left }}
             d={linepath}
             strokeWidth={1.25}
-            width={divWidth - 20}
+            width={divWidth}
           />
           <rect
             id="fillColor"
             x={rectLX}
             y={0}
             width={rectRX - rectLX}
-            height={height + 50}
+            height={height + 90}
             fill="rgba(0,0,0,0.2)" // Slightly darker than the background color
           />
           <g
@@ -294,7 +297,7 @@ export function LineChart() {
               x={rectRX - 2.5}
               y={0}
               width={5}
-              height={height + 50}
+              height={height + 90}
               fill="steelblue"
               stroke="black"
             />
@@ -320,7 +323,7 @@ export function LineChart() {
               x={rectLX}
               y={0}
               width={5}
-              height={height + 50}
+              height={height + 90}
               fill="steelblue"
               stroke="black"
             />
