@@ -270,6 +270,10 @@ export function LineChart() {
               handleRRectMove(e, "left");
             }
           }}
+          onMouseLeave={() => {
+            setIsRightDragging(false);
+            setIsLeftDragging(false);
+          }}
         >
           <path
             fill={"none"}
