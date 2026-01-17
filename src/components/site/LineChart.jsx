@@ -246,7 +246,7 @@ export function LineChart() {
 
   return (
     <div style={lineChartBox}>
-      <div style={{ ...slider, width: divWidth + 20, marginBottom: "100px" }}>
+      <div style={{ ...slider, width: divWidth, marginBottom: "100px" }}>
         <div style={{ ...leftYears, left: -95 }}>{localYears[0]}</div>
         <div style={{ ...rightYears, right: -95 }}>{localYears[1]}</div>
 
