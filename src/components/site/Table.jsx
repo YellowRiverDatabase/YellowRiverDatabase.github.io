@@ -125,6 +125,7 @@ export function MyTable() {
                     setSourceInfo({ place: tableHeader, ...row });
                     setIsSourceModal(true);
                   }}
+                  className="tableRow"
                 >
                   <td style={dataStyle}>{formatDate(row.en_date_start)}</td>
                   <td style={dataStyle}>

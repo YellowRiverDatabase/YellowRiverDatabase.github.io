@@ -371,3 +371,9 @@ Markdown Content Styles
   border-top: 2px solid #eaecef;
   margin: 1.5em 0;
 }
+
+
+.tableRow:hover {
+  background-color: rgba(200, 200, 200, 0.4);
+  cursor: pointer;
+}
