@@ -54,10 +54,12 @@ const tableBodyStyle = {
 
 const headerStyle = {
   display: "flex",
+  flexDirection: "column",
   justifyContent: "center",
   color: "black",
   alignItems: "center",
   height: "3em",
+  marginBottom: "1em",
 };
 
 const dataStyle = {
@@ -97,6 +99,10 @@ export function MyTable() {
       <div style={tableStyle}>
         <div style={headerStyle}>
           <h1>{tableHeader}</h1>
+          <span style={{ textAlign: "center" }}>
+            (click a row to see source details)
+          </span>
+          <br />
           <div style={closeButtonStyle} onClick={() => setIsTable(false)}>
             &times;
           </div>
