@@ -4,7 +4,7 @@ import { useRecoilState } from "recoil";
 import { regime_dates } from "../site/globalState";
 
 const location = {
-  zIndex: 1,
+  zindex: 1,
   width: "125px",
   backgroundColor: "white",
   border: "1px solid black",
