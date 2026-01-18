@@ -51,10 +51,6 @@ export function Header() {
       path: "/db-description",
     },
     {
-      name: "Database History",
-      path: "/db-history",
-    },
-    {
       name: "Data on GitHub",
       path: "https://github.com/YellowRiverDatabase/geodata/tree/main/relational-datadata",
       newTab: true,
@@ -72,8 +68,8 @@ export function Header() {
             className="bg-body-tertiary"
           >
             <Container fluid>
-              <Navbar.Brand href="#">
-                The Tracks of Yu
+              <Navbar.Brand href="/" style={{ fontWeight: "bold" }}>
+                Tracks of Yu
                 <br /> Digital Atlas{" "}
               </Navbar.Brand>
               <Navbar.Toggle

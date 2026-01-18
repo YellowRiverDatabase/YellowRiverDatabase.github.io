@@ -13,7 +13,7 @@ export function MkDownTemplate({ url }) {
     getMarkDown();
   }, [url]);
   return (
-    <div>
+    <div className="markdown-content">
       <EssayTemplate>
         <Markdown>{mkdown}</Markdown>
       </EssayTemplate>
