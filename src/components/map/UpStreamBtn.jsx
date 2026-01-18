@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { upstreamChoicesState } from "../site/globalState";
 import { useRecoilState } from "recoil";
+import { regime_dates } from "../site/globalState";
 
 const location = {
   zIndex: 1,
@@ -103,7 +104,6 @@ export function UpStreamBtn() {
   const [snapShots, setSnapShots] = useRecoilState(upstreamChoicesState);
 
   const handleClick = (key) => {
-    console.log("key", key);
     setSnapShots({ ...snapShots, [key]: !snapShots[key] });
   };
 
@@ -121,7 +121,7 @@ export function UpStreamBtn() {
           </button>
         </div>
         <div style={valuesBox}>
-          {Object.entries(snapShots).map(([key, value], i) => {
+          {Object.entries(regime_dates).map(([key, value], i) => {
             return (
               <div
                 style={lineItem}
@@ -132,7 +132,10 @@ export function UpStreamBtn() {
                   {snapShots[key] ? <CheckedBox /> : <EmptyBox />}{" "}
                 </div>
                 <div style={lineBox}>
-                  <section>{key}</section>
+                  <section>
+                    {key}
+                    <br />({convertYear(value[0])} - {convertYear(value[1])})
+                  </section>
                 </div>
               </div>
             );
@@ -146,4 +149,12 @@ export function UpStreamBtn() {
       Upstream Places
     </button>
   );
+}
+
+function convertYear(num) {
+  if (num < 0) {
+    return `${Math.abs(num)} BCE`;
+  } else {
+    return `${num} CE`;
+  }
 }

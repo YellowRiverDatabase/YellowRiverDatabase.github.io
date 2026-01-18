@@ -249,7 +249,7 @@ export const groupedEventsState = selector({
       ([key, value]) => ({
         date: key,
         events: value,
-      })
+      }),
     );
     // sort grouped by date
     grouped.sort((a, b) => {
@@ -292,12 +292,17 @@ export const regime_dates = {
   Qin: [-221, -206],
   Tang: [618, 906],
   Song: [960, 1127], // Northern Song
-  "Northern and Southern Dynasties": [220, 618],
+  "North and South Dynasties": [220, 618],
 };
 
 export const upstreamChoicesState = atom({
   key: "upstreamChoicesState",
-  default: {},
+  default: Object.keys(regime_dates).reduce((acc, key) => {
+    {
+      acc[key] = false;
+      return acc;
+    }
+  }, {}),
 });
 
 export const upstreamDataState = selector({
@@ -305,8 +310,20 @@ export const upstreamDataState = selector({
   get: ({ get }) => {
     const upstream = get(upstreamState);
     const options = get(upstreamChoicesState);
+    const trueOptions = Object.entries(options)
+      .filter(([key, value]) => value === true)
+      .map(([key, value]) => key);
     return upstream.filter((d) => {
-      return d.regime in options && options[d.regime] === true;
+      for (let regime of trueOptions) {
+        if (
+          d.date >= regime_dates[regime][0] &&
+          d.date <= regime_dates[regime][1]
+        ) {
+          return true;
+        } else {
+          return false;
+        }
+      }
     });
   },
 });

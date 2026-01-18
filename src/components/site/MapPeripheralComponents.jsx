@@ -30,7 +30,7 @@ export function MapPeripheralComponents() {
         <LegendMap />
         <div
           style={{
-            zIndex: 3,
+            zindex: 3,
             pointerEvents: "auto",
             display: "flex",
             flexDirection: "column",

@@ -41,7 +41,7 @@ export function UpStreamLayer() {
   useEffect(() => {
     const getData = async () => {
       const res = await fetch(
-        "https://raw.githubusercontent.com/YellowRiverDatabase/geodata/main/atlas_data/upstream-data.json"
+        "https://raw.githubusercontent.com/YellowRiverDatabase/geodata/main/atlas_data/upstream-data.json",
       );
       const data = await res.json();
       setUpstream(data);
@@ -49,22 +49,12 @@ export function UpStreamLayer() {
     getData();
   }, []);
 
-  useEffect(() => {
-    console.log("upstream: ", upstream);
-    console.log("upStreamDat", upStreamData);
-  }, [upstream, upStreamData]);
+  // useEffect(() => {
+  //   console.log("upstream: ", upstream);
+  //   console.log("upStreamDat", upStreamData);
+  // }, [upstream, upStreamData]);
 
-  //** Qi, Northern Wei, Western Jin, Wei, Later Qin, Western Wei, Later Zhao, Former Liang, Former Qin, Later Liang, Former Yan, Former Zhao, Eastern Wei should be grouped as Northern and Southern Dynasties. (220ce-618ce)
-  //  */
-  //
   const returnRegimes = (regime) => {};
-
-  useEffect(() => {
-    const snapShots = [...new Set(upstream.map((d) => d.regime))];
-    const snaps = snapShots.sort((a, b) => b - a);
-    const me = Object.fromEntries(snaps.map((d) => [d, false]));
-    setSnapshot(me);
-  }, [upstream]);
 
   const Layer = new IconLayer({
     id: "upstream-layer",
