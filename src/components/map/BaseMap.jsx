@@ -12,24 +12,14 @@ import {
   viewState,
   visibilityState,
 } from "../site/globalState";
-import { OceansLayer } from "./OceansLayer";
 import { Map } from "react-map-gl";
-import { BASEMAP } from "@deck.gl/carto";
-import oceans from "../../mymaps/oceans.json";
-import { ChinaBorderLayer } from "./ChinaBorder";
-import { GeoJsonLayer } from "./GeoJsonLayer";
-import { LineLayer } from "./LineLayer";
 import { useEffect, useMemo } from "react";
 import { RiversLayer } from "./RiversLayer";
 import { Events } from "./Events";
-import { Tiles } from "./TileLayer";
-import { Marker } from "react-map-gl";
 import { formatDate } from "./formatDate";
 import { StudyArea } from "./StudyArea";
-import { WebMercatorViewport } from "deck.gl";
 import { max, min } from "d3-array";
 import { MyTable } from "../site/Table";
-import { Filter } from "./Filter";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { UpStreamLayer } from "./UpStreamLayer";
 
@@ -42,11 +32,6 @@ function capitalizeWords(string) {
 
 export function BaseMap() {
   const [view, setView] = useRecoilState(viewState);
-  const [visibility, setVisibility] = useRecoilState(visibilityState);
-  const [chinaBorders, setChinaBorders] = useRecoilState(ChinaBorderState);
-  const [rivers, setRivers] = useRecoilState(riversState);
-  const [studyarea, setStudyArea] = useRecoilState(studyAreaState);
-  const riverRoutes = useRecoilValue(riverRoutesState);
   const groupedEvents = useRecoilValue(groupedEventsState);
   const [tableData, setTableData] = useRecoilState(tableDataState);
   const [isTable, setIsTable] = useRecoilState(isTableState);
@@ -69,6 +54,17 @@ export function BaseMap() {
         }}
         controller={true}
         map
+        getCursor={(e) => {
+          if (e.isDragging) {
+            return "grabbing";
+          }
+          if (e.isHovering) {
+            return "pointer";
+          }
+          if (!e.isDragging) {
+            return "grab";
+          }
+        }}
         layers={[
           // Tiles(),
           // ChinaBorderLayer(visibility),
@@ -82,11 +78,9 @@ export function BaseMap() {
         }}
         onClick={(e) => {
           if (e.object && e.object.events) {
-            // console.log(e.object.events);
-            // // console.log(e.object.placepinyin);
             setTableData(e.object.events);
             setTableHeader(
-              `${capitalizeWords(e.object.ch_pinyin)} ${e.object.tr_title}`
+              `${capitalizeWords(e.object.ch_pinyin)} ${e.object.tr_title}`,
             );
             setIsTable(true);
           }
@@ -101,13 +95,12 @@ export function BaseMap() {
             return `${object.hz} `;
           }
           if (object && !object.properties && object.events) {
-            console.log(object.events);
             return `${object.ch_pinyin} (${object.tr_title}): ${
               object.events.length
             } events from ${formatDate(
-              min(object.events.map((a) => a.en_date_start))
+              min(object.events.map((a) => a.en_date_start)),
             )} to ${formatDate(
-              max(object.events.map((a) => a.en_date_start))
+              max(object.events.map((a) => a.en_date_start)),
             )}`;
           }
         }}

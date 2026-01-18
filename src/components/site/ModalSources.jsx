@@ -124,7 +124,7 @@ export function ModalSources({ sources, onClose }) {
                     ))}
                   {sourceInfo.description?.length > 0 &&
                     sourceInfo.description.map((d, i) => (
-                      <tr style={trStyle}>
+                      <tr style={trStyle} key={`${d}-${i}`}>
                         <td style={{ textAlign: "start" }}>
                           {sourceInfo.source[i]} Description:
                         </td>
