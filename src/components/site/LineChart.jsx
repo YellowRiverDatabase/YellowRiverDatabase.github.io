@@ -5,7 +5,7 @@ import {
   upstreamChoicesState,
   yearsState,
 } from "./globalState";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import * as d3 from "d3";
 import { Checkbox } from "./Checkbox";
 
@@ -124,53 +124,62 @@ export function LineChart() {
   const width = divWidth;
   const height = h - margin.top - margin.bottom;
 
-  const x = d3
-    .scaleLinear()
-    .domain(d3.extent(groupedEvents, (d) => d.date))
-    .range([0, width]);
+  const extentDates = useMemo(
+    () => d3.extent(groupedEvents, (d) => d.date),
+    [groupedEvents],
+  );
+  const dateDomain =
+    extentDates[0] === undefined || extentDates[1] === undefined
+      ? [-2070, 1916]
+      : extentDates;
 
-  const y = d3
-    .scaleLinear()
-    .domain(d3.extent(groupedEvents, (d) => d.events.length))
-    .range([height, -height]);
+  const x = useMemo(
+    () => d3.scaleLinear().domain(dateDomain).range([0, width]),
+    [dateDomain, width],
+  );
+
+  const extentCounts = useMemo(
+    () => d3.extent(groupedEvents, (d) => d.events.length),
+    [groupedEvents],
+  );
+  const countDomain =
+    extentCounts[0] === undefined || extentCounts[1] === undefined
+      ? [0, 1]
+      : extentCounts;
+
+  const y = useMemo(
+    () => d3.scaleLinear().domain(countDomain).range([height, -height]),
+    [countDomain, height],
+  );
 
   const linebuilder = d3
     .line()
     .x((d) => x(d.date))
     .y((d) => y(d.events.length - 50));
 
-  const linepath = linebuilder(groupedEvents);
-
-  const rightDate = Math.round(x.invert(rectRX + 5));
-  const leftDate = Math.round(x.invert(rectLX - 5));
+  const linepath = groupedEvents.length > 0 ? linebuilder(groupedEvents) : "";
 
   useEffect(() => {
-    setLocalYears([
-      leftDate < -1700 ? -1700 : leftDate,
-      rightDate > 1916 ? 1916 : rightDate,
-    ]);
-  }, [leftDate, rightDate]);
-
-  useEffect(() => {
-    if (isRightDragging === false) {
-      rightDate < 1916 && setYears([years[0], localYears[1]]);
-      rightDate > 1916 && setYears([years[0], 1916]);
-    }
-  }, [isRightDragging, rectRX]);
-
-  useEffect(() => {
-    if (isLeftDragging === false) {
-      leftDate > -2070 && setYears([localYears[0], years[1]]);
-      // console.log("rectLX", Math.round(x.invert(rectLX - 5)));
-      leftDate < -2070 && setYears([-2070, years[1]]);
-    }
-  }, [isLeftDragging, rectLX]);
+    setLocalYears(years);
+    setRectLX(Math.max(0, x(years[0]) - 5));
+    setRectRX(Math.min(width, x(years[1]) + 5));
+  }, [years, width, x]);
 
   const bisect = d3.bisector((d) => d.date).left;
 
+  const handleMouseUp = () => {
+    setIsRightDragging(false);
+    setIsLeftDragging(false);
+    const left = Math.round(x.invert(rectLX + 5));
+    const right = Math.round(x.invert(rectRX - 5));
+    setYears([
+      left < -2070 ? -2070 : left,
+      right > 1916 ? 1916 : right,
+    ]);
+  };
+
   const handleRRectMove = (e, direction) => {
     const [mouseX] = d3.pointer(e);
-    const dateValue = x.invert(mouseX);
     if (mouseX === 0 || mouseX === divWidth) {
       setIsLeftDragging(false);
       setIsRightDragging(false);
@@ -191,10 +200,6 @@ export function LineChart() {
     ) {
       setRectLX(Math.max(mouseX - 5, 0));
     }
-  };
-  const handleMouseUp = (e) => {
-    setIsRightDragging(false);
-    setIsLeftDragging(false);
   };
 
   const handleClick = (key) => {

@@ -87,7 +87,16 @@ export function MyTable() {
   const [isSourceModal, setIsSourceModal] = useRecoilState(isSourceModalState);
 
   const sortedTableData = useMemo(() => {
-    return [...tableData].sort((a, b) => +a.en_date_start - +b.en_date_start);
+    return [...tableData].sort((a, b) => {
+      const da = Number(a.en_date_start);
+      const db = Number(b.en_date_start);
+      const aValid = Number.isFinite(da);
+      const bValid = Number.isFinite(db);
+      if (!aValid && !bValid) return 0;
+      if (!aValid) return 1;
+      if (!bValid) return -1;
+      return da - db;
+    });
   }, [tableData]);
 
   if (!isTable) {

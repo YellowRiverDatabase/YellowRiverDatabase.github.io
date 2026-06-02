@@ -70,7 +70,7 @@ export function Events() {
         // // console.log("from the events", d.events);
         return 300 * d.events.length;
       },
-      getPosition: (d) => [d.lat, d.long],
+      getPosition: (d) => [d.long, d.lat],
       getRadius: (d) => 1500,
       getFillColor: (d) => {
         return setFillColor(d.events);

@@ -3,6 +3,8 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import {
   ChinaBorderState,
   groupedEventsState,
+  isSourceModalState,
+  sourceModalInfoState,
   isTableState,
   riverRoutesState,
   riversState,
@@ -36,6 +38,8 @@ export function BaseMap() {
   const [tableData, setTableData] = useRecoilState(tableDataState);
   const [isTable, setIsTable] = useRecoilState(isTableState);
   const [tableHeader, setTableHeader] = useRecoilState(tableHeaderState);
+  const [isSourceModal, setIsSourceModal] = useRecoilState(isSourceModalState);
+  const [sourceInfo, setSourceInfo] = useRecoilState(sourceModalInfoState);
 
   useEffect(() => {
     // console.log(groupedEvents);
@@ -84,6 +88,23 @@ export function BaseMap() {
             );
             setIsTable(true);
           }
+          if (e.object && e.object.date && e.object.regime) {
+            console.log("Upstream object clicked:", e.object);
+            const name =
+              e.object.hz || e.object.py || e.object.name_type_en || "Upstream place";
+            setSourceInfo({
+              place: name,
+              date: e.object.date,
+              regime: e.object.regime,
+              regime_ch: e.object.regime_ch,
+              py: e.object.py,
+              hz: e.object.hz,
+              name_type_en: e.object.name_type_en,
+              name_type: e.object.name_type,
+              name_class_en: e.object.name_class_en,
+            });
+            setIsSourceModal(true);
+          }
         }}
         getTooltip={({ object }) => {
           if (object && object.properties) {
@@ -91,8 +112,8 @@ export function BaseMap() {
               object.properties.yearstart + " - " + object.properties.yearend
             );
           }
-          if (object && object.regime) {
-            return `${object.hz} `;
+          if (object && object.date && object.regime) {
+            return object.hz || object.py || object.name_type_en || "Upstream place";
           }
           if (object && !object.properties && object.events) {
             return `${object.ch_pinyin} (${object.tr_title}): ${

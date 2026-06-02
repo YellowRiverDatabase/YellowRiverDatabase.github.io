@@ -107,6 +107,22 @@ export function UpStreamBtn() {
     setSnapShots({ ...snapShots, [key]: !snapShots[key] });
   };
 
+  const handleAll = () => {
+    const allSelected = Object.keys(regime_dates).reduce((acc, key) => {
+      acc[key] = true;
+      return acc;
+    }, {});
+    setSnapShots(allSelected);
+  };
+
+  const handleNone = () => {
+    const noneSelected = Object.keys(regime_dates).reduce((acc, key) => {
+      acc[key] = false;
+      return acc;
+    }, {});
+    setSnapShots(noneSelected);
+  };
+
   if (isOpen) {
     return (
       <div style={box}>
@@ -118,6 +134,39 @@ export function UpStreamBtn() {
             onClick={() => setIsOpen(false)}
           >
             &times;
+          </button>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            gap: "0.5em",
+            width: "100%",
+            justifyContent: "center",
+          }}
+        >
+          <button
+            style={{
+              padding: "4px 8px",
+              borderRadius: "4px",
+              border: "1px solid black",
+              background: "white",
+              cursor: "pointer",
+            }}
+            onClick={handleAll}
+          >
+            All
+          </button>
+          <button
+            style={{
+              padding: "4px 8px",
+              borderRadius: "4px",
+              border: "1px solid black",
+              background: "white",
+              cursor: "pointer",
+            }}
+            onClick={handleNone}
+          >
+            None
           </button>
         </div>
         <div style={valuesBox}>

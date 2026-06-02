@@ -19,7 +19,7 @@ export const viewState = atom({
 
 export const yearsState = atom({
   key: "yearsState",
-  default: [0, 100],
+  default: [-2070, 1916],
 });
 
 // state for geojson
@@ -84,6 +84,7 @@ export const visibilityState = atom({
   default: {
     "Study Area": false,
     "River Courses": false,
+    "Upstream Places": true,
   },
 });
 
@@ -144,7 +145,7 @@ export const eventsInStudyAreaState = selector({
     }
     const studyArea = studyBorder?.features?.[0];
     const filtered = events.filter((e) => {
-      const pt = point([e.lat, e.long]);
+      const pt = point([e.long, e.lat]);
       return booleanPointInPolygon(pt, studyArea);
     });
     return filtered;
@@ -306,19 +307,22 @@ export const upstreamDataState = selector({
     const trueOptions = Object.entries(options)
       .filter(([key, value]) => value === true)
       .map(([key, value]) => key);
-    const newUpstream = upstream.filter((d) => {
-      for (let regime of trueOptions) {
-        if (
-          d.date >= regime_dates[regime][0] &&
-          d.date <= regime_dates[regime][1]
-        ) {
-          return true;
-        } else {
-          return false;
-        }
-      }
+
+    if (trueOptions.length === 0) {
+      return [];
+    }
+
+    const filtered = upstream.filter((d) => {
+      const date = Number(d.date);
+      if (!Number.isFinite(date)) return false;
+      return trueOptions.some((regime) => {
+        const range = regime_dates[regime];
+        if (!range) return false;
+        return date >= range[0] && date <= range[1];
+      });
     });
-      return newUpstream;
+
+    return filtered;
   },
 });
 

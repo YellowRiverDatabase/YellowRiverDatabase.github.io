@@ -60,16 +60,16 @@ export function UpStreamLayer() {
     id: "upstream-layer",
     data: upStreamData,
     pickable: true,
-    sizeScale: 10,
+    sizeScale: 11,
     visibility: visibility["Upstream Places"],
-    getPosition: (d) => [d.y_coor, d.x_coor],
+    getPosition: (d) => [d.x_coor, d.y_coor],
     getIcon: (d) => ({
       url: svgToDataURL(svgVillageIcon()),
       width: 250,
       height: 250,
       mask: true,
     }),
-    getSize: (d) => d.size * 2,
+    getSize: (d) => (d.size ?? 1) * 2,
   });
 
   return Layer;
