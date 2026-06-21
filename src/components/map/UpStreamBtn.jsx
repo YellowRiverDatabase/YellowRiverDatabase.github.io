@@ -3,13 +3,16 @@ import { upstreamChoicesState } from "../site/globalState";
 import { useRecoilState } from "recoil";
 import { regime_dates } from "../site/globalState";
 
+const sortedRegimes = Object.entries(regime_dates).sort(
+  ([, a], [, b]) => a[0] - b[0]
+);
+
 const location = {
   zindex: 1,
   width: "125px",
   backgroundColor: "white",
   border: "1px solid black",
   alignSelf: "end",
-
   borderRadius: "5px",
 };
 
@@ -39,23 +42,18 @@ const titleLine = {
 
 const valuesBox = {
   display: "grid",
-  // gridAutoFlow: "row",
   gridTemplateColumns: "1fr 1fr",
   alignItems: "center",
   justifyItems: "start",
   gap: "1em",
-  // width: "100%",
   flexWrap: "wrap",
   margin: "0 10px",
   overflow: "auto",
 };
 
 const lineItem = {
-  // width: "100%",
   display: "flex",
-  // width: "75px",
   flexDirection: "row",
-  // justifyContent: "space-between",
   alignItems: "center",
   gap: "0.5em",
   cursor: "pointer",
@@ -136,6 +134,7 @@ export function UpStreamBtn() {
             &times;
           </button>
         </div>
+
         <div
           style={{
             display: "flex",
@@ -156,6 +155,7 @@ export function UpStreamBtn() {
           >
             All
           </button>
+
           <button
             style={{
               padding: "4px 8px",
@@ -169,21 +169,24 @@ export function UpStreamBtn() {
             None
           </button>
         </div>
+
         <div style={valuesBox}>
-          {Object.entries(regime_dates).map(([key, value], i) => {
+          {sortedRegimes.map(([key, value]) => {
             return (
               <div
                 style={lineItem}
                 onClick={() => handleClick(key)}
-                key={`${key}`}
+                key={key}
               >
                 <div style={lineBox}>
-                  {snapShots[key] ? <CheckedBox /> : <EmptyBox />}{" "}
+                  {snapShots[key] ? <CheckedBox /> : <EmptyBox />}
                 </div>
+
                 <div style={lineBox}>
                   <section>
                     {key}
-                    <br />({convertYear(value[0])} - {convertYear(value[1])})
+                    <br />
+                    ({convertYear(value[0])} - {convertYear(value[1])})
                   </section>
                 </div>
               </div>
@@ -193,6 +196,7 @@ export function UpStreamBtn() {
       </div>
     );
   }
+
   return (
     <button style={{ ...location }} onClick={() => setIsOpen(true)}>
       Upstream Places
