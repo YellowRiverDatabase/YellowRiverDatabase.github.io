@@ -3,6 +3,7 @@ import {
   dynastiesState,
   erasState,
   isLayersMenuState,
+  limitToStudyAreaState,
   visibilityState,
 } from "./globalState";
 import { RadioBtn } from "./RadioBtn";
@@ -21,6 +22,9 @@ const filtersMenu = {
 export function LayersMenu() {
   const [isLayersMenu, setIsLayersMenu] = useRecoilState(isLayersMenuState);
   const [visibility, setVisibility] = useRecoilState(visibilityState);
+  const [limitToStudyArea, setLimitToStudyArea] = useRecoilState(
+    limitToStudyAreaState,
+  );
 
   return (
     <div style={filtersMenu}>
@@ -39,6 +43,12 @@ export function LayersMenu() {
             />
           );
         })}
+        <RadioBtn
+          key="limit-to-study-area"
+          label="Limit to Study Area"
+          checked={limitToStudyArea}
+          onChange={(e) => setLimitToStudyArea(e.target.checked)}
+        />
       </div>
     </div>
   );

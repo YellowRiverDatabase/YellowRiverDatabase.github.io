@@ -3,6 +3,10 @@ import { log } from "deck.gl";
 import { atom, selector } from "recoil";
 import { booleanPointInPolygon } from "@turf/boolean-point-in-polygon";
 import { point, polygon } from "@turf/helpers";
+
+import { buffer } from "@turf/buffer";
+import { booleanIntersects } from "@turf/boolean-intersects";
+
 import { typeOf } from "maplibre-gl";
 
 export const viewState = atom({
@@ -79,6 +83,28 @@ export const erasState = atom({
   default: {},
 });
 
+export const limitToStudyAreaState = atom({
+  key: "limitToStudyAreaState",
+  default: true, // enabled by default
+});
+
+export const studyAreaBufferState = selector({
+  key: "studyAreaBufferState",
+  get: ({ get }) => {
+    const studyBorder = get(StudyBorderState);
+    const studyArea = studyBorder?.features?.[0];
+    if (!studyArea) {
+      return null;
+    }
+    try {
+      return buffer(studyArea, 50, { units: "kilometers" });
+    } catch (e) {
+      console.error("Error buffering study area:", e);
+      return null;
+    }
+  },
+});
+
 export const visibilityState = atom({
   key: "visibilityState",
   default: {
@@ -136,17 +162,20 @@ export const eventsInStudyAreaState = selector({
   key: "eventsInStudyAreaState",
   get: ({ get }) => {
     const events = get(eventsState);
-    const studyBorder = get(StudyBorderState);
+    const limitToStudyArea = get(limitToStudyAreaState);
     if (events.length === 0) {
       return events;
     }
-    if (studyBorder?.length === 0) {
+    if (!limitToStudyArea) {
       return events;
     }
-    const studyArea = studyBorder?.features?.[0];
+    const bufferedArea = get(studyAreaBufferState);
+    if (!bufferedArea) {
+      return events;
+    }
     const filtered = events.filter((e) => {
       const pt = point([e.long, e.lat]);
-      return booleanPointInPolygon(pt, studyArea);
+      return booleanPointInPolygon(pt, bufferedArea);
     });
     return filtered;
   },
@@ -304,6 +333,8 @@ export const upstreamDataState = selector({
   get: ({ get }) => {
     const upstream = get(upstreamState);
     const options = get(upstreamChoicesState);
+    const limitToStudyArea = get(limitToStudyAreaState);
+    const bufferedArea = get(studyAreaBufferState);
     const trueOptions = Object.entries(options)
       .filter(([key, value]) => value === true)
       .map(([key, value]) => key);
@@ -312,7 +343,7 @@ export const upstreamDataState = selector({
       return [];
     }
 
-    const filtered = upstream.filter((d) => {
+    let filtered = upstream.filter((d) => {
       const date = Number(d.date);
       if (!Number.isFinite(date)) return false;
       return trueOptions.some((regime) => {
@@ -321,6 +352,14 @@ export const upstreamDataState = selector({
         return date >= range[0] && date <= range[1];
       });
     });
+
+    if (limitToStudyArea && bufferedArea) {
+      filtered = filtered.filter((d) => {
+        if (d.x_coor == null || d.y_coor == null) return true;
+        const pt = point([d.x_coor, d.y_coor]);
+        return booleanPointInPolygon(pt, bufferedArea);
+      });
+    }
 
     return filtered;
   },
