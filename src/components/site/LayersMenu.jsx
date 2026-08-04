@@ -4,6 +4,7 @@ import {
   erasState,
   isLayersMenuState,
   limitToStudyAreaState,
+  limitToLoessPlateauState,
   visibilityState,
 } from "./globalState";
 import { RadioBtn } from "./RadioBtn";
@@ -24,6 +25,9 @@ export function LayersMenu() {
   const [visibility, setVisibility] = useRecoilState(visibilityState);
   const [limitToStudyArea, setLimitToStudyArea] = useRecoilState(
     limitToStudyAreaState,
+  );
+  const [limitToLoessPlateau, setLimitToLoessPlateau] = useRecoilState(
+    limitToLoessPlateauState,
   );
 
   return (
@@ -48,6 +52,12 @@ export function LayersMenu() {
           label="Limit to Study Area"
           checked={limitToStudyArea}
           onChange={(e) => setLimitToStudyArea(e.target.checked)}
+        />
+        <RadioBtn
+          key="limit-to-loess-plateau"
+          label="Limit to Loess Plateau"
+          checked={limitToLoessPlateau}
+          onChange={(e) => setLimitToLoessPlateau(e.target.checked)}
         />
       </div>
     </div>

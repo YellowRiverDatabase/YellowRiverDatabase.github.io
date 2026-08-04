@@ -20,6 +20,7 @@ import { RiversLayer } from "./RiversLayer";
 import { Events } from "./Events";
 import { formatDate } from "./formatDate";
 import { StudyArea } from "./StudyArea";
+import { LoessArea } from "./LoessArea";
 import { max, min } from "d3-array";
 import { MyTable } from "../site/Table";
 import "mapbox-gl/dist/mapbox-gl.css";
@@ -75,6 +76,7 @@ export function BaseMap() {
           Events(),
           RiversLayer(),
           StudyArea(),
+          LoessArea(),
           UpStreamLayer(),
         ]}
         onViewStateChange={(e) => {
