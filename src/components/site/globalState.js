@@ -105,10 +105,37 @@ export const studyAreaBufferState = selector({
   },
 });
 
+export const limitToLoessPlateauState = atom({
+  key: "limitToLoessPlateauState",
+  default: false,
+});
+
+// Buffer distance (km) applied to the Loess Plateau boundary when
+// "Limit to Loess Plateau" is enabled. Adjust as needed.
+const LOESS_BUFFER_KM = 50;
+
+export const loessAreaBufferState = selector({
+  key: "loessAreaBufferState",
+  get: ({ get }) => {
+    const loessBorder = get(LoessBorderState);
+    const loessArea = loessBorder?.features?.[0];
+    if (!loessArea) {
+      return null;
+    }
+    try {
+      return buffer(loessArea, LOESS_BUFFER_KM, { units: "kilometers" });
+    } catch (e) {
+      console.error("Error buffering loess plateau area:", e);
+      return null;
+    }
+  },
+});
+
 export const visibilityState = atom({
   key: "visibilityState",
   default: {
     "Study Area": false,
+    "Loess Study Area": false,
     "River Courses": false,
     "Upstream Places": true,
   },
@@ -129,6 +156,11 @@ export const ChinaBorderState = atom({
 
 export const StudyBorderState = atom({
   key: "StudyBorderState",
+  default: [],
+});
+
+export const LoessBorderState = atom({
+  key: "LoessBorderState",
   default: [],
 });
 
@@ -335,6 +367,8 @@ export const upstreamDataState = selector({
     const options = get(upstreamChoicesState);
     const limitToStudyArea = get(limitToStudyAreaState);
     const bufferedArea = get(studyAreaBufferState);
+    const limitToLoessPlateau = get(limitToLoessPlateauState);
+    const loessArea = get(loessAreaBufferState);
     const trueOptions = Object.entries(options)
       .filter(([key, value]) => value === true)
       .map(([key, value]) => key);
@@ -358,6 +392,14 @@ export const upstreamDataState = selector({
         if (d.x_coor == null || d.y_coor == null) return true;
         const pt = point([d.x_coor, d.y_coor]);
         return booleanPointInPolygon(pt, bufferedArea);
+      });
+    }
+
+    if (limitToLoessPlateau && loessArea) {
+      filtered = filtered.filter((d) => {
+        if (d.x_coor == null || d.y_coor == null) return true;
+        const pt = point([d.x_coor, d.y_coor]);
+        return booleanPointInPolygon(pt, loessArea);
       });
     }
 
